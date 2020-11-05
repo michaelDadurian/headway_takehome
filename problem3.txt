@@ -1,0 +1,41 @@
+Design an api to manage a job board.
+
+● Jobs postings should have at least a title and description
+● Users can create job postings
+● Users can update job postings
+● Users can read a specific job posting
+● Users read multiple job postings, optionally filtering by title
+● Users can delete job postings
+
+POST /create/
+    -Takes in a JSON obj containing job title, description, and user id
+        data = {
+            user_id : int,
+            job_title: str,
+            job_description: str
+        }
+    -generates a job id and returns it to the client
+
+POST /delete/<job_id>
+    -Retrieve user from session, verify they own the job
+    -Delete job with job_id from DB
+
+PUT /update/<job_id>
+    -Retrieve user from session, verify they own the job
+    -Takes in a json containing which fields to update, e.g
+        data = {
+            job_id: int,
+            job_description: str OR null,
+            job_title: str OR null
+        }
+
+    If field is null, don't update it
+
+GET /jobs?job_id=<job_id>
+    -GET request containing query param with job id
+    -fetches the job listing that matches the job id
+
+GET /jobs?page_num=0&title=<title>
+    -Retrieve paginated job postings filtered by query params
+    -filter params are optional
+    -If title query param is not set, filter by date by default
